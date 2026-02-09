@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Limitless Agents - 48小时开发时间线</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --bg-tertiary: #1a1a1a;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --accent-green: #10b981;
+            --accent-orange: #f59e0b;
+            --accent-pink: #ec4899;
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --text-muted: #52525b;
+            --border: #27272a;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 20px;
+            text-align: center;
+            background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .hero-badge .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #fff 0%, #a1a1aa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 3rem;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Timeline */
+        .timeline-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .day-section {
+            margin-bottom: 60px;
+        }
+
+        .day-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .day-number {
+            font-size: 3rem;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent-purple);
+        }
+
+        .day-info h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .day-info p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .phase {
+            margin-bottom: 40px;
+        }
+
+        .phase-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .phase-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .phase-icon.morning { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+        .phase-icon.afternoon { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+        .phase-icon.evening { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
+        .phase-icon.night { background: linear-gradient(135deg, #1f2937, #111827); border: 1px solid var(--border); }
+
+        .phase-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .commits {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            position: relative;
+            padding-left: 24px;
+        }
+
+        .commits::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent-purple) 0%, var(--accent-blue) 100%);
+            border-radius: 2px;
+        }
+
+        .commit {
+            display: grid;
+            grid-template-columns: 70px 80px 1fr;
+            gap: 16px;
+            align-items: start;
+            padding: 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .commit:hover {
+            border-color: var(--accent-purple);
+            transform: translateX(4px);
+        }
+
+        .commit::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 24px;
+            width: 12px;
+            height: 12px;
+            background: var(--bg-primary);
+            border: 2px solid var(--accent-purple);
+            border-radius: 50%;
+        }
+
+        .commit-time {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: var(--accent-blue);
+            font-weight: 500;
+        }
+
+        .commit-hash {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--text-muted);
+            background: var(--bg-tertiary);
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .commit-message {
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .commit-message strong {
+            color: var(--accent-green);
+        }
+
+        /* Footer Stats */
+        .footer-stats {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .footer-stats h3 {
+            font-size: 1.5rem;
+            margin-bottom: 32px;
+            color: var(--text-secondary);
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .tech-tag {
+            padding: 8px 16px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .tech-tag:hover {
+            border-color: var(--accent-purple);
+            color: var(--text-primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .commit {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .hero-stats {
+                gap: 24px;
+            }
+
+            .stat-value {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="hero-badge">
+            <span class="dot"></span>
+            <span>Production Ready</span>
+        </div>
+        <h1>Limitless Agents</h1>
+        <p class="hero-subtitle">从 create-next-app 到生产就绪平台的 48 小时</p>
+        <div class="hero-stats">
+            <div class="stat">
+                <div class="stat-value">48</div>
+                <div class="stat-label">Hours</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">33</div>
+                <div class="stat-label">Commits</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">7</div>
+                <div class="stat-label">Tools</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">1</div>
+                <div class="stat-label">Builder</div>
+            </div>
+        </div>
+    </section>
+
+    <div class="timeline-container">
+        <!-- Day 1 -->
+        <section class="day-section">
+            <div class="day-header">
+                <div class="day-number">01</div>
+                <div class="day-info">
+                    <h2>2月8日 · 周六</h2>
+                    <p>从零到功能完备</p>
+                </div>
+            </div>
+
+            <!-- 上午 -->
+            <div class="phase">
+                <div class="phase-header">
+                    <div class="phase-icon morning">☀️</div>
+                    <span class="phase-title">上午 · 项目初始化</span>
+                </div>
+                <div class="commits">
+                    <div class="commit">
+                        <span class="commit-time">12:49</span>
+                        <span class="commit-hash">013d513</span>
+                        <span class="commit-message"><strong>create-next-app</strong> — 空壳诞生</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 下午 · 基础管线 -->
+            <div class="phase">
+                <div class="phase-header">
+                    <div class="phase-icon afternoon">🔧</div>
+                    <span class="phase-title">下午 · 基础管线搭建</span>
+                </div>
+                <div class="commits">
+                    <div class="commit">
+                        <span class="commit-time">13:15</span>
+                        <span class="commit-hash">c19ee53</span>
+                        <span class="commit-message"><strong>核心三管线上线</strong> — Kimi K2.5 对话 + Fish TTS + Web Speech STT</span>
+                    </div>
+                    <div class="commit">
+                        <span class="commit-time">13:23</span>
+                        <span class="commit-hash">5378535</span>
+                        <span class="commit-message">fix: moonshot API 域名修正</span>
+                    </div>
+                    <div class="commit">
+                        <span class="commit-time">15:05</span>
+                        <span class="commit-hash">6527b74</span>
+                        <span class="commit-message"><strong>STT 迁移</strong> → SenseVoice 本地模型</span>
+                    </div>
+                    <div class="commit">
+                        <span class="commit-time">15:37</span>
+                        <span class="commit-hash">fc7cc41</span>
+                        <span class="commit-message"><strong>STT 再迁移</strong> → 阿里云百炼 Qwen3-ASR-Flash（云端）</span>
+                    </div>
+                    <div class="commit">
+                        <span class="commit-time">15:52</span>
+                        <span class="commit-hash">5bc206b</span>
+                        <span class="commit-message"><strong>TTS 迁移</strong> → 阿里云百炼 Qwen3-TTS-Flash + 语音识别文字显示修复</span>
+                    </div>
+                    <div class="commit">
+                        <span class="commit-time">15:58</span>
+                        <span class="commit-hash">93deffd</span>
+                        <span class="commit-message">STT 手动发送 + TTS 加载动画 + 播放进度条</span>
+                    </div>
+                    <div class="commit">
+                        <span class="commit-time">16:02</span>
+                        <span class="commit-hash">94f19cc</span>
+                        <span class="commit-message">关闭 AI 回复自动播放，改为手动点击</span>
+                    </div>
+                    <div class="commit">
+                        <span class="commit-time">16:08</span>
+                        <span class="commit-hash">f2d92ca</span>
+                        <span class="commit-message">文档同步（PRD v2.0 + CLAUDE.md）</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 下午 · UI 体系 -->
+            <div class="phase">
+                <div class="phase-header">
+                    <div class="phase-icon afternoon">🎨</div>
+                    <span class="phase-title">下午 · UI 体系构建</span>
+                </div>
+                <div class="commits">
+                    <div class="commit">
+                        <span class="commit-time">16:15</span>
+                        <span class="commit-hash">5063ab3</span>
+                        <span class="commit-message"><strong>统一输入容器</strong> — 模型选择器 + 上传按钮</span>
+                    </div>
+                    <div class="commit">
+                        <span class="commit-time">16:26</span>
+                        <span class="commit-hash">4ab440d</span>
+                        <span class="commit-message"><strong>侧边栏</strong> — 对话历史 + 主题切换 + 多对话管理</span>
+                    </div>
+                    <div class="commit">
+                        <span class="commit-time">16:41</span>
+                        <span class="commit-hash">a1f5de5</span>
+                        <span class="commit-message"><strong>Markdown 渲染</strong> — 代码高亮 + 复制 + Toast + Tooltip</span>
+                    </div>
+                    <div class="commit">
+                        <span class="commit-time">16:50</span>
+                        <span class="commit-hash">4465ae0</span>
+                        <span class="commit-message">PRD-P4 UI polish 规划文档</span>
+                    </div>
+                    <div class="commit">
+                        <span class="commit-time">17:01</span>
+                        <span class="commit-hash">89e9514</span>
+                        <span class="commit-message"><strong>录音计时器</strong> + 3 分钟自动停止安全阀</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 晚上 -->
+            <div class="phase">
+                <div class="phase-header">
+                    <div class="phase-icon evening">🚀</div>
+                    <span class="phase-title">晚上 · 高级特性爆发</span>
+                </div>
+                <div class="commits">
+                    <div class="commit">
+                        <span class="commit-time">20:15</span>
+                        <span class="commit-hash">cbae37d</span>
+                        <span class="commit-message"><strong>多模型 + 设置中心</strong> — DeepSeek V3/R1 接入、图标按钮、对话管理增强</span>
+                    </div>
+                    <div class="commit">
+                        <span class="commit-time">20:41</span>
+                        <span class="commit-hash">564b96e</span>
+                        <span class="commit-message"><strong>AI 工具系统</strong> — 网络搜索/网页阅读/天气/时间/任务管理 5 工具</span>
+                    </div>
+                    <div class="commit">
+                        <span class="commit-time">21:01</span>
+                        <span class="commit-hash">0db1dd2</span>
+                        <span class="commit-message"><strong>TodoWrite 自主规划</strong> — AI 自动拆解复杂任务为多步计划</span>
+                    </div>
+                    <div class="commit">
+                        <span class="commit-time">21:57</span>
+                        <span class="commit-hash">d6b0565</span>
+                        <span class="commit-message">fix: AI SDK v6 工具可见性 + 推理流式 UX</span>
+                    </div>
+                    <div class="commit">
+                        <span class="commit-time">22:08</span>
+                        <span class="commit-hash">7e14158</span>
+                        <span class="commit-message"><strong>时序 parts 渲染</strong> + 可折叠 PlanCard</span>
+                    </div>
+                    <div class="commit">
+                        <span class="commit-time">22:27</span>
+                        <span class="commit-hash">dd0f7e4</span>
+                        <span class="commit-message">fix: 侧边栏标题溢出遮挡操作按钮</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 深夜 -->
+            <div class="phase">
+                <div class="phase-header">
+                    <div class="phase-icon night">🌙</div>
+                    <span class="phase-title">深夜 · 工程化</span>
+                </div>
+                <div class="commits">
+                    <div class="commit">
+                        <span class="commit-time">23:28</span>
+                        <span class="commit-hash">5111363</span>
+                        <span class="commit-message"><strong>ToolPlugin 架构重构</strong> — 单文件共置 meta+definition + 每工具开关 + OTel 可观测性 V1</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Day 2 -->
+        <section class="day-section">
+            <div class="day-header">
+                <div class="day-number">02</div>
+                <div class="day-info">
+                    <h2>2月9日 · 周日</h2>
+                    <p>企业级特性 + 生产部署</p>
+                </div>
+            </div>
+
+            <!-- 凌晨 -->
+            <div class="phase">
+                <div class="phase-header">
+                    <div class="phase-icon night">🔐</div>
+                    <span class="phase-title">凌晨 · Auth + 持久化 + UI 打磨</span>
+                </div>
+                <div class="commits">
+                    <div class="commit">
+                        <span class="commit-time">00:07</span>
+                        <span class="commit-hash">eeddaa2</span>
+                        <span class="commit-message"><strong>Supabase Auth</strong> — 登录/注册 + session 中间件 + Postgres 对话持久化</span>
+                    </div>
+                    <div class="commit">
+                        <span class="commit-time">00:21</span>
+                        <span class="commit-hash">8a0dbc4</span>
+                        <span class="commit-message"><strong>侧边栏底部用户菜单重构</strong>（Claude/ChatGPT 风格）</span>
+                    </div>
+                    <div class="commit">
+                        <span class="commit-time">00:28</span>
+                        <span class="commit-hash">8f10d6c</span>
+                        <span class="commit-message">聊天内容 max-w-3xl 居中 + 关闭 dev indicators</span>
+                    </div>
+                    <div class="commit">
+                        <span class="commit-time">00:31</span>
+                        <span class="commit-hash">458b3d4</span>
+                        <span class="commit-message">设置面板加宽 (max-w-3xl, h-540)</span>
+                    </div>
+                    <div class="commit">
+                        <span class="commit-time">00:33</span>
+                        <span class="commit-hash">da600a2</span>
+                        <span class="commit-message">fix: shadcn sm:max-w-lg 覆盖问题</span>
+                    </div>
+                    <div class="commit">
+                        <span class="commit-time">00:36</span>
+                        <span class="commit-hash">39af22e</span>
+                        <span class="commit-message">L2 CLAUDE.md 文档同步</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 晚上 -->
+            <div class="phase">
+                <div class="phase-header">
+                    <div class="phase-icon evening">⚡</div>
+                    <span class="phase-title">晚上 · 核心能力扩展</span>
+                </div>
+                <div class="commits">
+                    <div class="commit">
+                        <span class="commit-time">20:00</span>
+                        <span class="commit-hash">d8603fc</span>
+                        <span class="commit-message"><strong>E2B 代码执行</strong> — 沙箱 Python/JS 运行 + 迷你终端渲染器</span>
+                    </div>
+                    <div class="commit">
+                        <span class="commit-time">21:15</span>
+                        <span class="commit-hash">319caf1</span>
+                        <span class="commit-message"><strong>文件分析 + Artifacts 系统</strong> — PDF/DOCX/XLSX/CSV 解析管线 + 5 类型预览面板 + 拖拽调宽</span>
+                    </div>
+                    <div class="commit">
+                        <span class="commit-time">21:33</span>
+                        <span class="commit-hash">90c3851</span>
+                        <span class="commit-message"><strong>UI 打磨</strong> — 消息入场动画 + 滚动回底 + 建议芯片 + iOS 安全区</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 深夜 -->
+            <div class="phase">
+                <div class="phase-header">
+                    <div class="phase-icon night">🎯</div>
+                    <span class="phase-title">深夜 · 技能系统 + 生产修复</span>
+                </div>
+                <div class="commits">
+                    <div class="commit">
+                        <span class="commit-time">22:51</span>
+                        <span class="commit-hash">610be91</span>
+                        <span class="commit-message"><strong>技能系统全栈</strong> — .md/.zip 上传解析 + Supabase 持久化 + Popover 快速开关 + 消息级技能标签 + 页面滚动修复</span>
+                    </div>
+                    <div class="commit">
+                        <span class="commit-time">23:07</span>
+                        <span class="commit-hash">028221a</span>
+                        <span class="commit-message"><strong>生产修复 #1</strong> — Artifact 面板 v5/v6 字段兼容 + 点击回退</span>
+                    </div>
+                    <div class="commit">
+                        <span class="commit-time">23:12</span>
+                        <span class="commit-hash">6e290b1</span>
+                        <span class="commit-message"><strong>生产修复 #2</strong> — maxDuration 60→300（根因：推理模型耗时 57s，Vercel 杀进程）</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <section class="footer-stats">
+        <h3>技术栈 & 能力清单</h3>
+        <div class="tech-stack">
+            <span class="tech-tag">Next.js 15</span>
+            <span class="tech-tag">Vercel AI SDK</span>
+            <span class="tech-tag">Kimi K2.5</span>
+            <span class="tech-tag">DeepSeek V3/R1</span>
+            <span class="tech-tag">Supabase Auth</span>
+            <span class="tech-tag">PostgreSQL</span>
+            <span class="tech-tag">E2B Sandbox</span>
+            <span class="tech-tag">阿里云百炼 TTS/ASR</span>
+            <span class="tech-tag">ReAct 规划</span>
+            <span class="tech-tag">7+ 工具</span>
+            <span class="tech-tag">Artifacts 系统</span>
+            <span class="tech-tag">技能插件</span>
+            <span class="tech-tag">OTel 可观测性</span>
+            <span class="tech-tag">流式输出</span>
+            <span class="tech-tag">语音交互</span>
+        </div>
+    </section>
+
+    <script>
+        // 入场动画
+        const commits = document.querySelectorAll('.commit');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateX(0)';
+                    }, index * 50);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        commits.forEach(commit => {
+            commit.style.opacity = '0';
+            commit.style.transform = 'translateX(-20px)';
+            commit.style.transition = 'all 0.4s ease';
+            observer.observe(commit);
+        });
+    </script>
+</body>
+</html>
