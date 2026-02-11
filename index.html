@@ -239,101 +239,6 @@
     </div>
 </section>
 
-<!-- ==================== SPRINT 2 ==================== -->
-<div class="sprint-header">
-    <div class="sprint-badge">Sprint 2</div>
-    <div class="sprint-title">记忆系统 + 上下文压缩 + 设置同步</div>
-    <div class="sprint-desc">2026-02-11 &mdash; 1 天，13 commits，62 tests</div>
-    <div class="sprint-divider"></div>
-</div>
-
-<div class="tl">
-    <section class="day">
-        <div class="day-head">
-            <div class="day-num">11</div>
-            <div class="day-meta"><h2>2月11日 · 周二</h2><p>记忆 + 压缩 + 同步</p></div>
-        </div>
-
-        <div class="phase">
-            <div class="phase-head"><div class="phase-dot"></div><span class="phase-title">上午 · 记忆系统 + askUser + 计划修复</span></div>
-            <div class="commits">
-                <div class="c"><span class="c-hash">aca3eff</span><span class="c-msg"><strong>askUser 主动提问</strong> — AI 暂停向用户提问，用户通过 UI 回答后继续</span></div>
-                <div class="c"><span class="c-hash">e85ff96</span><span class="c-msg"><strong>计划生命周期修复</strong> — 按对话 ID 隔离 localStorage + 完成后自动清除</span></div>
-                <div class="c"><span class="c-hash">a250074</span><span class="c-msg"><strong>OpenClaw 记忆系统</strong> — 记忆存储/检索/压缩摘要 + Context 架构 + 测试套件</span></div>
-                <div class="c"><span class="c-hash">192ffe8</span><span class="c-msg">生产构建修复 — AI SDK v6 zodSchema() wrapper + 类型断言</span></div>
-            </div>
-        </div>
-
-        <div class="phase">
-            <div class="phase-head"><div class="phase-dot"></div><span class="phase-title">下午 · 迁移 + 压缩系统</span></div>
-            <div class="commits">
-                <div class="c"><span class="c-hash">ce6c2c9</span><span class="c-msg"><strong>记忆 Supabase 迁移</strong> — 文件系统 → Postgres memory_store 表</span></div>
-                <div class="c"><span class="c-hash">a5b8792</span><span class="c-msg"><strong>设置跨设备同步</strong> — localStorage → Supabase user_settings 表</span></div>
-                <div class="c"><span class="c-hash">e3fd41f</span><span class="c-msg"><strong>测试套件</strong> — useFileMemories 17 tests，项目 62 tests total</span></div>
-                <div class="c"><span class="c-hash">a839a10</span><span class="c-msg"><strong>上下文压缩</strong> — 客户端 70% 阈值主动摘要 + 服务端 85% 滑动窗口裁剪</span></div>
-                <div class="c"><span class="c-hash">ee4564f</span><span class="c-msg"><strong>压缩 E2E 测试</strong> — 30 轮对话 drop/inject/model-compare 全场景覆盖</span></div>
-            </div>
-        </div>
-
-        <div class="phase">
-            <div class="phase-head"><div class="phase-dot"></div><span class="phase-title">傍晚 · 压缩 UI + 修正</span></div>
-            <div class="commits">
-                <div class="c"><span class="c-hash">7bcbcd4</span><span class="c-msg">临时降低 contextLimit=1000 浏览器实测 → 恢复</span></div>
-                <div class="c"><span class="c-hash">a4ac80f</span><span class="c-msg"><strong>压缩通知 UI</strong> — 剪刀分隔条 + 可展开摘要（类 Claude Code compacting）</span></div>
-                <div class="c"><span class="c-hash">40d0959</span><span class="c-msg">Kimi K2.5 contextLimit 修正 — 128K → 256K</span></div>
-            </div>
-        </div>
-    </section>
-</div>
-
-<!-- Sprint 2 Feature Grid -->
-<section class="feat-section">
-    <h3>Sprint 2 Features</h3>
-    <div class="feat-grid">
-        <span class="feat-cat">记忆</span><span class="feat-val">AI 主动存储 + saveMemory 工具 + searchMemories 语义检索 + 压缩摘要持久化</span>
-        <span class="feat-cat">压缩</span><span class="feat-val">客户端 useContextMonitor 70% 主动摘要 + 服务端 compressMessages 85% 滑动窗口</span>
-        <span class="feat-cat">压缩 UI</span><span class="feat-val">剪刀分隔条 + 可展开摘要（N 条旧消息已整合为摘要）</span>
-        <span class="feat-cat">交互</span><span class="feat-val">askUser — AI 暂停提问，用户通过 UI 卡片回答后继续生成</span>
-        <span class="feat-cat">同步</span><span class="feat-val">Settings Supabase 迁移 — 跨设备配置同步</span>
-        <span class="feat-cat">测试</span><span class="feat-val">62 tests — 记忆 Hook 17 + 压缩 E2E 30 轮 + 既有套件</span>
-    </div>
-</section>
-
-<!-- Sprint 2 Pitfalls -->
-<section class="pitfall-section">
-    <h3>Lessons Learned</h3>
-
-    <div class="pitfall">
-        <div class="pitfall-title"><span class="num">01</span>Serverless 无状态：文件系统不可写</div>
-        <p>记忆系统初版用 fs.writeFile 写本地 JSON，本地完美，Vercel 部署后 500。Serverless Functions 每次请求可能分配到不同容器，文件系统只读。</p>
-        <div class="lesson">Serverless = 无状态。任何持久化数据必须走外部存储，永远不要假设本地文件系统可写。</div>
-    </div>
-
-    <div class="pitfall">
-        <div class="pitfall-title"><span class="num">02</span>AI SDK v6 类型兼容陷阱</div>
-        <p>本地 build 通过，Vercel 构建失败。v5→v6 breaking change，messageMetadataSchema 需要 zodSchema() wrapper。本地 TypeScript 宽松模式没报错。</p>
-        <div class="lesson">SDK 大版本升级时，TypeScript 编译通过 ≠ 运行时兼容。升级后必须跑完整 npm run build。</div>
-    </div>
-
-    <div class="pitfall">
-        <div class="pitfall-title"><span class="num">03</span>客户端日志 ≠ 服务端行为</div>
-        <p>浏览器 Console 显示压缩在工作，但这只证明客户端预警层正常 — 服务端执行层是否真的裁剪了消息？没有证据。</p>
-        <div class="lesson">分层系统中，每一层都需要独立的可观测性。验证时要追踪完整数据流，不能只看一端。</div>
-    </div>
-
-    <div class="pitfall">
-        <div class="pitfall-title"><span class="num">04</span>模型参数标错 = 能力阉割</div>
-        <p>Kimi K2.5 contextLimit 设为 128K，导致压缩在 ~89.6K 就触发 — 实际模型支持 256K，远未到极限。凭印象填写，没查官方文档。</p>
-        <div class="lesson">模型配置必须以官方文档为准，不凭记忆。一个数字的错误会导致整条管线行为偏移。</div>
-    </div>
-
-    <div class="pitfall">
-        <div class="pitfall-title"><span class="num">05</span>压缩后用户无感知</div>
-        <p>服务端静默裁剪旧消息，用户完全不知道。AI 回复突然"忘记"之前的内容，用户困惑。</p>
-        <div class="lesson">任何影响用户体验的后端行为都必须有前端反馈。"无声的优化"在用户看来就是"无声的 bug"。</div>
-    </div>
-</section>
-
 <!-- ==================== SPRINT 1 ==================== -->
 <div class="sprint-header">
     <div class="sprint-badge">Sprint 1</div>
@@ -456,6 +361,101 @@
         <span class="feat-cat">可观测性</span><span class="feat-val">消息级 token/延迟 + OpenTelemetry → SigNoz Cloud</span>
         <span class="feat-cat">UI</span><span class="feat-val">Markdown 渲染 + 代码高亮 + 动画 + 滚动回底 + 建议芯片 + iOS 安全区 + 暗色模式</span>
         <span class="feat-cat">部署</span><span class="feat-val">Vercel Pro (limitless-agents.vercel.app)，maxDuration=300</span>
+    </div>
+</section>
+
+<!-- ==================== SPRINT 2 ==================== -->
+<div class="sprint-header">
+    <div class="sprint-badge">Sprint 2</div>
+    <div class="sprint-title">记忆系统 + 上下文压缩 + 设置同步</div>
+    <div class="sprint-desc">2026-02-11 &mdash; 1 天，13 commits，62 tests</div>
+    <div class="sprint-divider"></div>
+</div>
+
+<div class="tl">
+    <section class="day">
+        <div class="day-head">
+            <div class="day-num">11</div>
+            <div class="day-meta"><h2>2月11日 · 周二</h2><p>记忆 + 压缩 + 同步</p></div>
+        </div>
+
+        <div class="phase">
+            <div class="phase-head"><div class="phase-dot"></div><span class="phase-title">上午 · 记忆系统 + askUser + 计划修复</span></div>
+            <div class="commits">
+                <div class="c"><span class="c-hash">aca3eff</span><span class="c-msg"><strong>askUser 主动提问</strong> — AI 暂停向用户提问，用户通过 UI 回答后继续</span></div>
+                <div class="c"><span class="c-hash">e85ff96</span><span class="c-msg"><strong>计划生命周期修复</strong> — 按对话 ID 隔离 localStorage + 完成后自动清除</span></div>
+                <div class="c"><span class="c-hash">a250074</span><span class="c-msg"><strong>OpenClaw 记忆系统</strong> — 记忆存储/检索/压缩摘要 + Context 架构 + 测试套件</span></div>
+                <div class="c"><span class="c-hash">192ffe8</span><span class="c-msg">生产构建修复 — AI SDK v6 zodSchema() wrapper + 类型断言</span></div>
+            </div>
+        </div>
+
+        <div class="phase">
+            <div class="phase-head"><div class="phase-dot"></div><span class="phase-title">下午 · 迁移 + 压缩系统</span></div>
+            <div class="commits">
+                <div class="c"><span class="c-hash">ce6c2c9</span><span class="c-msg"><strong>记忆 Supabase 迁移</strong> — 文件系统 → Postgres memory_store 表</span></div>
+                <div class="c"><span class="c-hash">a5b8792</span><span class="c-msg"><strong>设置跨设备同步</strong> — localStorage → Supabase user_settings 表</span></div>
+                <div class="c"><span class="c-hash">e3fd41f</span><span class="c-msg"><strong>测试套件</strong> — useFileMemories 17 tests，项目 62 tests total</span></div>
+                <div class="c"><span class="c-hash">a839a10</span><span class="c-msg"><strong>上下文压缩</strong> — 客户端 70% 阈值主动摘要 + 服务端 85% 滑动窗口裁剪</span></div>
+                <div class="c"><span class="c-hash">ee4564f</span><span class="c-msg"><strong>压缩 E2E 测试</strong> — 30 轮对话 drop/inject/model-compare 全场景覆盖</span></div>
+            </div>
+        </div>
+
+        <div class="phase">
+            <div class="phase-head"><div class="phase-dot"></div><span class="phase-title">傍晚 · 压缩 UI + 修正</span></div>
+            <div class="commits">
+                <div class="c"><span class="c-hash">7bcbcd4</span><span class="c-msg">临时降低 contextLimit=1000 浏览器实测 → 恢复</span></div>
+                <div class="c"><span class="c-hash">a4ac80f</span><span class="c-msg"><strong>压缩通知 UI</strong> — 剪刀分隔条 + 可展开摘要（类 Claude Code compacting）</span></div>
+                <div class="c"><span class="c-hash">40d0959</span><span class="c-msg">Kimi K2.5 contextLimit 修正 — 128K → 256K</span></div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Sprint 2 Feature Grid -->
+<section class="feat-section">
+    <h3>Sprint 2 Features</h3>
+    <div class="feat-grid">
+        <span class="feat-cat">记忆</span><span class="feat-val">AI 主动存储 + saveMemory 工具 + searchMemories 语义检索 + 压缩摘要持久化</span>
+        <span class="feat-cat">压缩</span><span class="feat-val">客户端 useContextMonitor 70% 主动摘要 + 服务端 compressMessages 85% 滑动窗口</span>
+        <span class="feat-cat">压缩 UI</span><span class="feat-val">剪刀分隔条 + 可展开摘要（N 条旧消息已整合为摘要）</span>
+        <span class="feat-cat">交互</span><span class="feat-val">askUser — AI 暂停提问，用户通过 UI 卡片回答后继续生成</span>
+        <span class="feat-cat">同步</span><span class="feat-val">Settings Supabase 迁移 — 跨设备配置同步</span>
+        <span class="feat-cat">测试</span><span class="feat-val">62 tests — 记忆 Hook 17 + 压缩 E2E 30 轮 + 既有套件</span>
+    </div>
+</section>
+
+<!-- ==================== LESSONS LEARNED ==================== -->
+<section class="pitfall-section">
+    <h3>Lessons Learned</h3>
+
+    <div class="pitfall">
+        <div class="pitfall-title"><span class="num">01</span>Serverless 无状态：文件系统不可写</div>
+        <p>记忆系统初版用 fs.writeFile 写本地 JSON，本地完美，Vercel 部署后 500。Serverless Functions 每次请求可能分配到不同容器，文件系统只读。</p>
+        <div class="lesson">Serverless = 无状态。任何持久化数据必须走外部存储，永远不要假设本地文件系统可写。</div>
+    </div>
+
+    <div class="pitfall">
+        <div class="pitfall-title"><span class="num">02</span>AI SDK v6 类型兼容陷阱</div>
+        <p>本地 build 通过，Vercel 构建失败。v5→v6 breaking change，messageMetadataSchema 需要 zodSchema() wrapper。本地 TypeScript 宽松模式没报错。</p>
+        <div class="lesson">SDK 大版本升级时，TypeScript 编译通过 ≠ 运行时兼容。升级后必须跑完整 npm run build。</div>
+    </div>
+
+    <div class="pitfall">
+        <div class="pitfall-title"><span class="num">03</span>客户端日志 ≠ 服务端行为</div>
+        <p>浏览器 Console 显示压缩在工作，但这只证明客户端预警层正常 — 服务端执行层是否真的裁剪了消息？没有证据。</p>
+        <div class="lesson">分层系统中，每一层都需要独立的可观测性。验证时要追踪完整数据流，不能只看一端。</div>
+    </div>
+
+    <div class="pitfall">
+        <div class="pitfall-title"><span class="num">04</span>模型参数标错 = 能力阉割</div>
+        <p>Kimi K2.5 contextLimit 设为 128K，导致压缩在 ~89.6K 就触发 — 实际模型支持 256K，远未到极限。凭印象填写，没查官方文档。</p>
+        <div class="lesson">模型配置必须以官方文档为准，不凭记忆。一个数字的错误会导致整条管线行为偏移。</div>
+    </div>
+
+    <div class="pitfall">
+        <div class="pitfall-title"><span class="num">05</span>压缩后用户无感知</div>
+        <p>服务端静默裁剪旧消息，用户完全不知道。AI 回复突然"忘记"之前的内容，用户困惑。</p>
+        <div class="lesson">任何影响用户体验的后端行为都必须有前端反馈。"无声的优化"在用户看来就是"无声的 bug"。</div>
     </div>
 </section>
 
