@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Limitless Agents - 48小时开发时间线</title>
+    <title>Limitless Agents — Changelog</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -56,8 +56,30 @@
             text-transform: uppercase; letter-spacing: 2px; margin-top: 4px;
         }
 
+        /* === SPRINT HEADER === */
+        .sprint-header {
+            max-width: 880px; margin: 0 auto; padding: 56px 24px 0;
+        }
+        .sprint-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px; font-weight: 600; color: var(--gray-2);
+            letter-spacing: 2px; text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+        .sprint-title {
+            font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .sprint-desc {
+            font-size: 14px; color: var(--gray-3); margin-bottom: 8px;
+        }
+        .sprint-divider {
+            width: 100%; height: 1px; background: var(--border); margin-top: 24px;
+        }
+
         /* === TIMELINE === */
-        .tl { max-width: 880px; margin: 0 auto; padding: 64px 24px; }
+        .tl { max-width: 880px; margin: 0 auto; padding: 40px 24px 64px; }
 
         .day { margin-bottom: 64px; }
         .day-head {
@@ -95,12 +117,13 @@
         }
 
         .c {
-            display: grid; grid-template-columns: 56px 72px 1fr; gap: 16px;
+            display: grid; grid-template-columns: 72px 1fr; gap: 16px;
             align-items: center; padding: 14px 16px;
             background: var(--bg-card); border: 1px solid var(--border);
             border-radius: 10px; position: relative;
             transition: all .15s ease;
         }
+        .c.c-3col { grid-template-columns: 56px 72px 1fr; }
         .c:hover { border-color: var(--gray-4); transform: translateX(4px); background: var(--bg-hover); }
         .c::before {
             content: ''; position: absolute; left: -16px; top: 50%; transform: translateY(-50%);
@@ -119,6 +142,56 @@
         .c-msg { font-size: 14px; color: var(--gray-1); }
         .c-msg strong { color: var(--white); font-weight: 600; }
 
+        /* === FEATURE GRID === */
+        .feat-section {
+            max-width: 880px; margin: 0 auto; padding: 0 24px 64px;
+        }
+        .feat-section h3 {
+            font-size: 11px; color: var(--gray-3); text-transform: uppercase;
+            letter-spacing: 2px; margin-bottom: 20px;
+        }
+        .feat-grid {
+            display: grid; grid-template-columns: 100px 1fr; gap: 0;
+            font-size: 14px;
+        }
+        .feat-cat {
+            padding: 12px 0; color: var(--gray-3); font-weight: 500;
+            border-top: 1px solid var(--border);
+        }
+        .feat-val {
+            padding: 12px 0; color: var(--gray-1);
+            border-top: 1px solid var(--border);
+        }
+
+        /* === PITFALL SECTION === */
+        .pitfall-section {
+            max-width: 880px; margin: 0 auto; padding: 0 24px 64px;
+        }
+        .pitfall-section h3 {
+            font-size: 11px; color: var(--gray-3); text-transform: uppercase;
+            letter-spacing: 2px; margin-bottom: 24px;
+        }
+        .pitfall {
+            padding: 20px 24px; background: var(--bg-card);
+            border: 1px solid var(--border); border-radius: 12px;
+            margin-bottom: 12px; transition: all .15s ease;
+        }
+        .pitfall:hover { border-color: var(--gray-4); }
+        .pitfall-title {
+            font-size: 14px; font-weight: 600; margin-bottom: 8px;
+        }
+        .pitfall-title .num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px; color: var(--gray-3); margin-right: 8px;
+        }
+        .pitfall p {
+            font-size: 13px; color: var(--gray-3); line-height: 1.7;
+        }
+        .pitfall .lesson {
+            margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border);
+            font-size: 13px; color: var(--gray-2); font-style: italic;
+        }
+
         /* === FOOTER === */
         .foot {
             border-top: 1px solid var(--border);
@@ -136,10 +209,19 @@
         }
         .tag:hover { border-color: var(--gray-4); color: var(--gray-1); }
 
+        .author {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px; color: var(--gray-4); letter-spacing: 1.5px;
+            margin-top: 32px;
+        }
+
         @media (max-width: 640px) {
             .c { grid-template-columns: 1fr; gap: 4px; }
+            .c.c-3col { grid-template-columns: 1fr; }
             .stats { gap: 32px; }
             .stat-val { font-size: 2.5rem; }
+            .feat-grid { grid-template-columns: 1fr; }
+            .feat-cat { border-top: none; padding-bottom: 0; font-size: 12px; }
         }
     </style>
 </head>
@@ -148,14 +230,117 @@
 <section class="hero">
     <div class="hero-badge"><span class="dot"></span>Production Ready</div>
     <h1>Limitless Agents</h1>
-    <p class="hero-sub">从 create-next-app 到生产就绪平台的 48 小时</p>
+    <p class="hero-sub">AI Agent 平台开发时间线</p>
     <div class="stats">
-        <div><div class="stat-val">48</div><div class="stat-lbl">Hours</div></div>
-        <div><div class="stat-val">33</div><div class="stat-lbl">Commits</div></div>
-        <div><div class="stat-val">7</div><div class="stat-lbl">Tools</div></div>
+        <div><div class="stat-val">3</div><div class="stat-lbl">Days</div></div>
+        <div><div class="stat-val">46</div><div class="stat-lbl">Commits</div></div>
+        <div><div class="stat-val">62</div><div class="stat-lbl">Tests</div></div>
         <div><div class="stat-val">1</div><div class="stat-lbl">Builder</div></div>
     </div>
 </section>
+
+<!-- ==================== SPRINT 2 ==================== -->
+<div class="sprint-header">
+    <div class="sprint-badge">Sprint 2</div>
+    <div class="sprint-title">记忆系统 + 上下文压缩 + 设置同步</div>
+    <div class="sprint-desc">2026-02-11 &mdash; 1 天，13 commits，62 tests</div>
+    <div class="sprint-divider"></div>
+</div>
+
+<div class="tl">
+    <section class="day">
+        <div class="day-head">
+            <div class="day-num">03</div>
+            <div class="day-meta"><h2>2月11日 · 周二</h2><p>记忆 + 压缩 + 同步</p></div>
+        </div>
+
+        <div class="phase">
+            <div class="phase-head"><div class="phase-dot"></div><span class="phase-title">上午 · 记忆系统 + askUser + 计划修复</span></div>
+            <div class="commits">
+                <div class="c"><span class="c-hash">aca3eff</span><span class="c-msg"><strong>askUser 主动提问</strong> — AI 暂停向用户提问，用户通过 UI 回答后继续</span></div>
+                <div class="c"><span class="c-hash">e85ff96</span><span class="c-msg"><strong>计划生命周期修复</strong> — 按对话 ID 隔离 localStorage + 完成后自动清除</span></div>
+                <div class="c"><span class="c-hash">a250074</span><span class="c-msg"><strong>OpenClaw 记忆系统</strong> — 记忆存储/检索/压缩摘要 + Context 架构 + 测试套件</span></div>
+                <div class="c"><span class="c-hash">192ffe8</span><span class="c-msg">生产构建修复 — AI SDK v6 zodSchema() wrapper + 类型断言</span></div>
+            </div>
+        </div>
+
+        <div class="phase">
+            <div class="phase-head"><div class="phase-dot"></div><span class="phase-title">下午 · 迁移 + 压缩系统</span></div>
+            <div class="commits">
+                <div class="c"><span class="c-hash">ce6c2c9</span><span class="c-msg"><strong>记忆 Supabase 迁移</strong> — 文件系统 → Postgres memory_store 表</span></div>
+                <div class="c"><span class="c-hash">a5b8792</span><span class="c-msg"><strong>设置跨设备同步</strong> — localStorage → Supabase user_settings 表</span></div>
+                <div class="c"><span class="c-hash">e3fd41f</span><span class="c-msg"><strong>测试套件</strong> — useFileMemories 17 tests，项目 62 tests total</span></div>
+                <div class="c"><span class="c-hash">a839a10</span><span class="c-msg"><strong>上下文压缩</strong> — 客户端 70% 阈值主动摘要 + 服务端 85% 滑动窗口裁剪</span></div>
+                <div class="c"><span class="c-hash">ee4564f</span><span class="c-msg"><strong>压缩 E2E 测试</strong> — 30 轮对话 drop/inject/model-compare 全场景覆盖</span></div>
+            </div>
+        </div>
+
+        <div class="phase">
+            <div class="phase-head"><div class="phase-dot"></div><span class="phase-title">傍晚 · 压缩 UI + 修正</span></div>
+            <div class="commits">
+                <div class="c"><span class="c-hash">7bcbcd4</span><span class="c-msg">临时降低 contextLimit=1000 浏览器实测 → 恢复</span></div>
+                <div class="c"><span class="c-hash">a4ac80f</span><span class="c-msg"><strong>压缩通知 UI</strong> — 剪刀分隔条 + 可展开摘要（类 Claude Code compacting）</span></div>
+                <div class="c"><span class="c-hash">40d0959</span><span class="c-msg">Kimi K2.5 contextLimit 修正 — 128K → 256K</span></div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Sprint 2 Feature Grid -->
+<section class="feat-section">
+    <h3>Sprint 2 Features</h3>
+    <div class="feat-grid">
+        <span class="feat-cat">记忆</span><span class="feat-val">AI 主动存储 + saveMemory 工具 + searchMemories 语义检索 + 压缩摘要持久化</span>
+        <span class="feat-cat">压缩</span><span class="feat-val">客户端 useContextMonitor 70% 主动摘要 + 服务端 compressMessages 85% 滑动窗口</span>
+        <span class="feat-cat">压缩 UI</span><span class="feat-val">剪刀分隔条 + 可展开摘要（N 条旧消息已整合为摘要）</span>
+        <span class="feat-cat">交互</span><span class="feat-val">askUser — AI 暂停提问，用户通过 UI 卡片回答后继续生成</span>
+        <span class="feat-cat">同步</span><span class="feat-val">Settings Supabase 迁移 — 跨设备配置同步</span>
+        <span class="feat-cat">测试</span><span class="feat-val">62 tests — 记忆 Hook 17 + 压缩 E2E 30 轮 + 既有套件</span>
+    </div>
+</section>
+
+<!-- Sprint 2 Pitfalls -->
+<section class="pitfall-section">
+    <h3>Lessons Learned</h3>
+
+    <div class="pitfall">
+        <div class="pitfall-title"><span class="num">01</span>Serverless 无状态：文件系统不可写</div>
+        <p>记忆系统初版用 fs.writeFile 写本地 JSON，本地完美，Vercel 部署后 500。Serverless Functions 每次请求可能分配到不同容器，文件系统只读。</p>
+        <div class="lesson">Serverless = 无状态。任何持久化数据必须走外部存储，永远不要假设本地文件系统可写。</div>
+    </div>
+
+    <div class="pitfall">
+        <div class="pitfall-title"><span class="num">02</span>AI SDK v6 类型兼容陷阱</div>
+        <p>本地 build 通过，Vercel 构建失败。v5→v6 breaking change，messageMetadataSchema 需要 zodSchema() wrapper。本地 TypeScript 宽松模式没报错。</p>
+        <div class="lesson">SDK 大版本升级时，TypeScript 编译通过 ≠ 运行时兼容。升级后必须跑完整 npm run build。</div>
+    </div>
+
+    <div class="pitfall">
+        <div class="pitfall-title"><span class="num">03</span>客户端日志 ≠ 服务端行为</div>
+        <p>浏览器 Console 显示压缩在工作，但这只证明客户端预警层正常 — 服务端执行层是否真的裁剪了消息？没有证据。</p>
+        <div class="lesson">分层系统中，每一层都需要独立的可观测性。验证时要追踪完整数据流，不能只看一端。</div>
+    </div>
+
+    <div class="pitfall">
+        <div class="pitfall-title"><span class="num">04</span>模型参数标错 = 能力阉割</div>
+        <p>Kimi K2.5 contextLimit 设为 128K，导致压缩在 ~89.6K 就触发 — 实际模型支持 256K，远未到极限。凭印象填写，没查官方文档。</p>
+        <div class="lesson">模型配置必须以官方文档为准，不凭记忆。一个数字的错误会导致整条管线行为偏移。</div>
+    </div>
+
+    <div class="pitfall">
+        <div class="pitfall-title"><span class="num">05</span>压缩后用户无感知</div>
+        <p>服务端静默裁剪旧消息，用户完全不知道。AI 回复突然"忘记"之前的内容，用户困惑。</p>
+        <div class="lesson">任何影响用户体验的后端行为都必须有前端反馈。"无声的优化"在用户看来就是"无声的 bug"。</div>
+    </div>
+</section>
+
+<!-- ==================== SPRINT 1 ==================== -->
+<div class="sprint-header">
+    <div class="sprint-badge">Sprint 1</div>
+    <div class="sprint-title">从零到生产就绪 AI Agent 平台</div>
+    <div class="sprint-desc">2026-02-08 ~ 2026-02-09 &mdash; 2 天，33 commits</div>
+    <div class="sprint-divider"></div>
+</div>
 
 <div class="tl">
     <!-- DAY 1 -->
@@ -168,51 +353,51 @@
         <div class="phase">
             <div class="phase-head"><div class="phase-dot"></div><span class="phase-title">上午 · 项目初始化</span></div>
             <div class="commits">
-                <div class="c"><span class="c-time">12:49</span><span class="c-hash">013d513</span><span class="c-msg"><strong>create-next-app</strong> — 空壳诞生</span></div>
+                <div class="c c-3col"><span class="c-time">12:49</span><span class="c-hash">013d513</span><span class="c-msg"><strong>create-next-app</strong> — 空壳诞生</span></div>
             </div>
         </div>
 
         <div class="phase">
             <div class="phase-head"><div class="phase-dot"></div><span class="phase-title">下午 · 基础管线搭建</span></div>
             <div class="commits">
-                <div class="c"><span class="c-time">13:15</span><span class="c-hash">c19ee53</span><span class="c-msg"><strong>核心三管线上线</strong> — Kimi K2.5 对话 + Fish TTS + Web Speech STT</span></div>
-                <div class="c"><span class="c-time">13:23</span><span class="c-hash">5378535</span><span class="c-msg">fix: moonshot API 域名修正</span></div>
-                <div class="c"><span class="c-time">15:05</span><span class="c-hash">6527b74</span><span class="c-msg"><strong>STT 迁移</strong> → SenseVoice 本地模型</span></div>
-                <div class="c"><span class="c-time">15:37</span><span class="c-hash">fc7cc41</span><span class="c-msg"><strong>STT 再迁移</strong> → 阿里云百炼 Qwen3-ASR-Flash</span></div>
-                <div class="c"><span class="c-time">15:52</span><span class="c-hash">5bc206b</span><span class="c-msg"><strong>TTS 迁移</strong> → 阿里云百炼 Qwen3-TTS-Flash</span></div>
-                <div class="c"><span class="c-time">15:58</span><span class="c-hash">93deffd</span><span class="c-msg">STT 手动发送 + TTS 加载动画 + 播放进度条</span></div>
-                <div class="c"><span class="c-time">16:02</span><span class="c-hash">94f19cc</span><span class="c-msg">关闭自动播放，改为手动点击</span></div>
-                <div class="c"><span class="c-time">16:08</span><span class="c-hash">f2d92ca</span><span class="c-msg">文档同步 PRD v2.0 + CLAUDE.md</span></div>
+                <div class="c c-3col"><span class="c-time">13:15</span><span class="c-hash">c19ee53</span><span class="c-msg"><strong>核心三管线上线</strong> — Kimi K2.5 对话 + Fish TTS + Web Speech STT</span></div>
+                <div class="c c-3col"><span class="c-time">13:23</span><span class="c-hash">5378535</span><span class="c-msg">fix: moonshot API 域名修正</span></div>
+                <div class="c c-3col"><span class="c-time">15:05</span><span class="c-hash">6527b74</span><span class="c-msg"><strong>STT 迁移</strong> → SenseVoice 本地模型</span></div>
+                <div class="c c-3col"><span class="c-time">15:37</span><span class="c-hash">fc7cc41</span><span class="c-msg"><strong>STT 再迁移</strong> → 阿里云百炼 Qwen3-ASR-Flash</span></div>
+                <div class="c c-3col"><span class="c-time">15:52</span><span class="c-hash">5bc206b</span><span class="c-msg"><strong>TTS 迁移</strong> → 阿里云百炼 Qwen3-TTS-Flash</span></div>
+                <div class="c c-3col"><span class="c-time">15:58</span><span class="c-hash">93deffd</span><span class="c-msg">STT 手动发送 + TTS 加载动画 + 播放进度条</span></div>
+                <div class="c c-3col"><span class="c-time">16:02</span><span class="c-hash">94f19cc</span><span class="c-msg">关闭自动播放，改为手动点击</span></div>
+                <div class="c c-3col"><span class="c-time">16:08</span><span class="c-hash">f2d92ca</span><span class="c-msg">文档同步 PRD v2.0 + CLAUDE.md</span></div>
             </div>
         </div>
 
         <div class="phase">
             <div class="phase-head"><div class="phase-dot"></div><span class="phase-title">下午 · UI 体系构建</span></div>
             <div class="commits">
-                <div class="c"><span class="c-time">16:15</span><span class="c-hash">5063ab3</span><span class="c-msg"><strong>统一输入容器</strong> — 模型选择器 + 上传按钮</span></div>
-                <div class="c"><span class="c-time">16:26</span><span class="c-hash">4ab440d</span><span class="c-msg"><strong>侧边栏</strong> — 对话历史 + 主题切换 + 多对话管理</span></div>
-                <div class="c"><span class="c-time">16:41</span><span class="c-hash">a1f5de5</span><span class="c-msg"><strong>Markdown 渲染</strong> — 代码高亮 + 复制 + Toast + Tooltip</span></div>
-                <div class="c"><span class="c-time">16:50</span><span class="c-hash">4465ae0</span><span class="c-msg">PRD-P4 UI polish 规划文档</span></div>
-                <div class="c"><span class="c-time">17:01</span><span class="c-hash">89e9514</span><span class="c-msg"><strong>录音计时器</strong> + 3 分钟自动停止安全阀</span></div>
+                <div class="c c-3col"><span class="c-time">16:15</span><span class="c-hash">5063ab3</span><span class="c-msg"><strong>统一输入容器</strong> — 模型选择器 + 上传按钮</span></div>
+                <div class="c c-3col"><span class="c-time">16:26</span><span class="c-hash">4ab440d</span><span class="c-msg"><strong>侧边栏</strong> — 对话历史 + 主题切换 + 多对话管理</span></div>
+                <div class="c c-3col"><span class="c-time">16:41</span><span class="c-hash">a1f5de5</span><span class="c-msg"><strong>Markdown 渲染</strong> — 代码高亮 + 复制 + Toast + Tooltip</span></div>
+                <div class="c c-3col"><span class="c-time">16:50</span><span class="c-hash">4465ae0</span><span class="c-msg">PRD-P4 UI polish 规划文档</span></div>
+                <div class="c c-3col"><span class="c-time">17:01</span><span class="c-hash">89e9514</span><span class="c-msg"><strong>录音计时器</strong> + 3 分钟自动停止安全阀</span></div>
             </div>
         </div>
 
         <div class="phase">
             <div class="phase-head"><div class="phase-dot"></div><span class="phase-title">晚上 · 高级特性爆发</span></div>
             <div class="commits">
-                <div class="c"><span class="c-time">20:15</span><span class="c-hash">cbae37d</span><span class="c-msg"><strong>多模型 + 设置中心</strong> — DeepSeek V3/R1 接入</span></div>
-                <div class="c"><span class="c-time">20:41</span><span class="c-hash">564b96e</span><span class="c-msg"><strong>AI 工具系统</strong> — 搜索 / 网页 / 天气 / 时间 / 任务管理</span></div>
-                <div class="c"><span class="c-time">21:01</span><span class="c-hash">0db1dd2</span><span class="c-msg"><strong>TodoWrite 自主规划</strong> — AI 自动拆解复杂任务</span></div>
-                <div class="c"><span class="c-time">21:57</span><span class="c-hash">d6b0565</span><span class="c-msg">fix: AI SDK v6 工具可见性 + 推理流式 UX</span></div>
-                <div class="c"><span class="c-time">22:08</span><span class="c-hash">7e14158</span><span class="c-msg"><strong>时序 parts 渲染</strong> + 可折叠 PlanCard</span></div>
-                <div class="c"><span class="c-time">22:27</span><span class="c-hash">dd0f7e4</span><span class="c-msg">fix: 侧边栏标题溢出遮挡操作按钮</span></div>
+                <div class="c c-3col"><span class="c-time">20:15</span><span class="c-hash">cbae37d</span><span class="c-msg"><strong>多模型 + 设置中心</strong> — DeepSeek V3/R1 接入</span></div>
+                <div class="c c-3col"><span class="c-time">20:41</span><span class="c-hash">564b96e</span><span class="c-msg"><strong>AI 工具系统</strong> — 搜索 / 网页 / 天气 / 时间 / 任务管理</span></div>
+                <div class="c c-3col"><span class="c-time">21:01</span><span class="c-hash">0db1dd2</span><span class="c-msg"><strong>TodoWrite 自主规划</strong> — AI 自动拆解复杂任务</span></div>
+                <div class="c c-3col"><span class="c-time">21:57</span><span class="c-hash">d6b0565</span><span class="c-msg">fix: AI SDK v6 工具可见性 + 推理流式 UX</span></div>
+                <div class="c c-3col"><span class="c-time">22:08</span><span class="c-hash">7e14158</span><span class="c-msg"><strong>时序 parts 渲染</strong> + 可折叠 PlanCard</span></div>
+                <div class="c c-3col"><span class="c-time">22:27</span><span class="c-hash">dd0f7e4</span><span class="c-msg">fix: 侧边栏标题溢出遮挡操作按钮</span></div>
             </div>
         </div>
 
         <div class="phase">
             <div class="phase-head"><div class="phase-dot"></div><span class="phase-title">深夜 · 工程化</span></div>
             <div class="commits">
-                <div class="c"><span class="c-time">23:28</span><span class="c-hash">5111363</span><span class="c-msg"><strong>ToolPlugin 架构重构</strong> — 单文件共置 + 每工具开关 + OTel 可观测性</span></div>
+                <div class="c c-3col"><span class="c-time">23:28</span><span class="c-hash">5111363</span><span class="c-msg"><strong>ToolPlugin 架构重构</strong> — 单文件共置 + 每工具开关 + OTel 可观测性</span></div>
             </div>
         </div>
     </section>
@@ -227,40 +412,58 @@
         <div class="phase">
             <div class="phase-head"><div class="phase-dot"></div><span class="phase-title">凌晨 · Auth + 持久化</span></div>
             <div class="commits">
-                <div class="c"><span class="c-time">00:07</span><span class="c-hash">eeddaa2</span><span class="c-msg"><strong>Supabase Auth</strong> — 登录/注册 + session 中间件 + Postgres 持久化</span></div>
-                <div class="c"><span class="c-time">00:21</span><span class="c-hash">8a0dbc4</span><span class="c-msg"><strong>用户菜单重构</strong> — Claude/ChatGPT 风格</span></div>
-                <div class="c"><span class="c-time">00:28</span><span class="c-hash">8f10d6c</span><span class="c-msg">聊天内容居中 + 关闭 dev indicators</span></div>
-                <div class="c"><span class="c-time">00:31</span><span class="c-hash">458b3d4</span><span class="c-msg">设置面板加宽</span></div>
-                <div class="c"><span class="c-time">00:33</span><span class="c-hash">da600a2</span><span class="c-msg">fix: shadcn 覆盖问题</span></div>
-                <div class="c"><span class="c-time">00:36</span><span class="c-hash">39af22e</span><span class="c-msg">CLAUDE.md 文档同步</span></div>
+                <div class="c c-3col"><span class="c-time">00:07</span><span class="c-hash">eeddaa2</span><span class="c-msg"><strong>Supabase Auth</strong> — 登录/注册 + session 中间件 + Postgres 持久化</span></div>
+                <div class="c c-3col"><span class="c-time">00:21</span><span class="c-hash">8a0dbc4</span><span class="c-msg"><strong>用户菜单重构</strong> — Claude/ChatGPT 风格</span></div>
+                <div class="c c-3col"><span class="c-time">00:28</span><span class="c-hash">8f10d6c</span><span class="c-msg">聊天内容居中 + 关闭 dev indicators</span></div>
+                <div class="c c-3col"><span class="c-time">00:31</span><span class="c-hash">458b3d4</span><span class="c-msg">设置面板加宽</span></div>
+                <div class="c c-3col"><span class="c-time">00:33</span><span class="c-hash">da600a2</span><span class="c-msg">fix: shadcn 覆盖问题</span></div>
+                <div class="c c-3col"><span class="c-time">00:36</span><span class="c-hash">39af22e</span><span class="c-msg">CLAUDE.md 文档同步</span></div>
             </div>
         </div>
 
         <div class="phase">
             <div class="phase-head"><div class="phase-dot"></div><span class="phase-title">晚上 · 核心能力扩展</span></div>
             <div class="commits">
-                <div class="c"><span class="c-time">20:00</span><span class="c-hash">d8603fc</span><span class="c-msg"><strong>E2B 代码执行</strong> — 沙箱 Python/JS + 迷你终端渲染器</span></div>
-                <div class="c"><span class="c-time">21:15</span><span class="c-hash">319caf1</span><span class="c-msg"><strong>文件分析 + Artifacts</strong> — PDF/DOCX/XLSX/CSV 解析 + 5 类型预览 + 拖拽调宽</span></div>
-                <div class="c"><span class="c-time">21:33</span><span class="c-hash">90c3851</span><span class="c-msg"><strong>UI 打磨</strong> — 入场动画 + 滚动回底 + 建议芯片 + iOS 安全区</span></div>
+                <div class="c c-3col"><span class="c-time">20:00</span><span class="c-hash">d8603fc</span><span class="c-msg"><strong>E2B 代码执行</strong> — 沙箱 Python/JS + 迷你终端渲染器</span></div>
+                <div class="c c-3col"><span class="c-time">21:15</span><span class="c-hash">319caf1</span><span class="c-msg"><strong>文件分析 + Artifacts</strong> — PDF/DOCX/XLSX/CSV 解析 + 5 类型预览 + 拖拽调宽</span></div>
+                <div class="c c-3col"><span class="c-time">21:33</span><span class="c-hash">90c3851</span><span class="c-msg"><strong>UI 打磨</strong> — 入场动画 + 滚动回底 + 建议芯片 + iOS 安全区</span></div>
             </div>
         </div>
 
         <div class="phase">
             <div class="phase-head"><div class="phase-dot"></div><span class="phase-title">深夜 · 技能系统 + 生产修复</span></div>
             <div class="commits">
-                <div class="c"><span class="c-time">22:51</span><span class="c-hash">610be91</span><span class="c-msg"><strong>技能系统全栈</strong> — .md/.zip 上传 + Supabase 持久化 + Popover 开关 + 技能标签</span></div>
-                <div class="c"><span class="c-time">23:07</span><span class="c-hash">028221a</span><span class="c-msg"><strong>生产修复 #1</strong> — Artifact 面板字段兼容 + 点击回退</span></div>
-                <div class="c"><span class="c-time">23:12</span><span class="c-hash">6e290b1</span><span class="c-msg"><strong>生产修复 #2</strong> — maxDuration 60→300s</span></div>
+                <div class="c c-3col"><span class="c-time">22:51</span><span class="c-hash">610be91</span><span class="c-msg"><strong>技能系统全栈</strong> — .md/.zip 上传 + Supabase 持久化 + Popover 开关 + 技能标签</span></div>
+                <div class="c c-3col"><span class="c-time">23:07</span><span class="c-hash">028221a</span><span class="c-msg"><strong>生产修复 #1</strong> — Artifact 面板字段兼容 + 点击回退</span></div>
+                <div class="c c-3col"><span class="c-time">23:12</span><span class="c-hash">6e290b1</span><span class="c-msg"><strong>生产修复 #2</strong> — maxDuration 60→300s</span></div>
             </div>
         </div>
     </section>
 </div>
 
+<!-- Sprint 1 Feature Grid -->
+<section class="feat-section">
+    <h3>Sprint 1 Features</h3>
+    <div class="feat-grid">
+        <span class="feat-cat">对话</span><span class="feat-val">Kimi K2.5 / DeepSeek V3 / DeepSeek R1 多模型切换</span>
+        <span class="feat-cat">工具</span><span class="feat-val">网络搜索 (Tavily) / 网页阅读 (Jina) / 天气 / 时间 / 任务规划 / 代码执行 (E2B) / Artifact 创建</span>
+        <span class="feat-cat">文件</span><span class="feat-val">PDF / DOCX / XLSX / CSV 服务端解析管线</span>
+        <span class="feat-cat">Artifacts</span><span class="feat-val">5 类型预览 (code/html/markdown/csv/svg) + sandbox iframe + 拖拽调宽</span>
+        <span class="feat-cat">技能</span><span class="feat-val">.md/.zip 上传 → Supabase 持久化 → system prompt 注入 → 聊天区快速开关</span>
+        <span class="feat-cat">认证</span><span class="feat-val">Supabase Auth (邮箱/密码 + OAuth 回调)</span>
+        <span class="feat-cat">持久化</span><span class="feat-val">Supabase Postgres 对话存储 (乐观更新 + 防抖写入 + 懒加载)</span>
+        <span class="feat-cat">语音</span><span class="feat-val">阿里云百炼 TTS (Qwen3-TTS-Flash) + STT (Qwen3-ASR-Flash)</span>
+        <span class="feat-cat">可观测性</span><span class="feat-val">消息级 token/延迟 + OpenTelemetry → SigNoz Cloud</span>
+        <span class="feat-cat">UI</span><span class="feat-val">Markdown 渲染 + 代码高亮 + 动画 + 滚动回底 + 建议芯片 + iOS 安全区 + 暗色模式</span>
+        <span class="feat-cat">部署</span><span class="feat-val">Vercel Pro (limitless-agents.vercel.app)，maxDuration=300</span>
+    </div>
+</section>
+
 <section class="foot">
     <h3>Tech Stack</h3>
     <div class="tags">
         <span class="tag">Next.js 15</span>
-        <span class="tag">Vercel AI SDK</span>
+        <span class="tag">Vercel AI SDK v6</span>
         <span class="tag">Kimi K2.5</span>
         <span class="tag">DeepSeek V3/R1</span>
         <span class="tag">Supabase</span>
@@ -273,11 +476,14 @@
         <span class="tag">OTel</span>
         <span class="tag">Streaming</span>
         <span class="tag">Voice I/O</span>
+        <span class="tag">Context Compression</span>
+        <span class="tag">Memory System</span>
     </div>
+    <div class="author">Limitless</div>
 </section>
 
 <script>
-const els = document.querySelectorAll('.c');
+const els = document.querySelectorAll('.c, .pitfall');
 const obs = new IntersectionObserver(entries => {
     entries.forEach(e => {
         if (e.isIntersecting) {
@@ -291,7 +497,6 @@ els.forEach((el, i) => {
     el.style.transform = 'translateX(-12px)';
     el.style.transition = 'all .3s ease';
     obs.observe(el);
-    // Fallback: show all after 1s
     setTimeout(() => { el.style.opacity = '1'; el.style.transform = 'translateX(0)'; }, 300 + i * 30);
 });
 </script>
